@@ -16,17 +16,21 @@ function App() {
   //useEffect is something that is going to run every time when you perform any action like click or something but adding an empty array runs 
   // it once only its like a intialisation block and you can add any values too 
 
+  
   useEffect(()=>{
     console.log("Effect has been run");
+    const getReceipes= async ()=>{
+      const response= await fetch(`https:api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`);
+      const data= await response.json();
+      console.log(data);
+      setRecipes(data.hits);
+    }
     getReceipes();
   }, [query])
 
-  const getReceipes= async ()=>{
-    const response= await fetch(`https:api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`);
-    const data= await response.json();
-    console.log(data);
-    setRecipes(data.hits);
-  }
+  
+
+  
 
   const updateSearch = e =>{
     setSearch(e.target.value);
@@ -37,6 +41,8 @@ function App() {
     e.preventDefault();
     setQuery(search);
   }
+
+  
 
   return (
     <div className="App">
